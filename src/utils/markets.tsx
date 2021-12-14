@@ -25,11 +25,88 @@ import {Order} from '@project-serum/serum/lib/market';
 import BonfidaApi from './bonfidaConnector';
 
 // Used in debugging, should be false in production
-const _IGNORE_DEPRECATED = false;
+const _IGNORE_DEPRECATED = true;
+const NEKIUSDCMarketsInfo = {
+  address: new PublicKey("13SiVjqfxqfWZ3i2AbDZpiDmL7oxuf1wWfbqNcWBJ52S"),
+  deprecated: false,
+  name : "NEKI/USDC",
+  quoteLabel: "USDC",
+  baseLabel: "NEKI",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
+const solUSDCMarketsInfo = {
+  address: new PublicKey("9wFFyRfZBsuAha4YcuxcXLKwMxJR43S7fPfQLusDBzvT"),
+  deprecated: false,
+  name : "SOL/USDC",
+  quoteLabel: "USDC",
+  baseLabel: "SOL",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
+const srmUSDCMarketsInfo = {
+  address: new PublicKey("ByRys5tuUWDgL73G8JBAEfkdFf8JWBzPBDHsBVQ5vbQA"),
+  deprecated: false,
+  name : "SRM/USDC",
+  quoteLabel: "USDC",
+  baseLabel: "SRM",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
+const rayUSDCMarketsInfo = {
+  address: new PublicKey("2xiv8A5xrJ7RnGdxXB42uFEkYHJjszEhaJyKKt4WaLep"),
+  deprecated: false,
+  name : "RAY/USDC",
+  quoteLabel: "USDC",
+  baseLabel: "RAY",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
+const CATOUSDCMarketsInfo = {
+  address: new PublicKey("9fe1MWiKqUdwift3dEpxuRHWftG72rysCRHbxDy6i9xB"),
+  deprecated: false,
+  name : "CATO/USDC",
+  quoteLabel: "USDC",
+  baseLabel: "CATO",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
+const FTTUSDCMarketsInfo = {
+  address: new PublicKey("2Pbh1CvRVku1TgewMfycemghf6sU9EyuFDcNXqvRmSxc"),
+  deprecated: false,
+  name : "FTT/USDC",
+  quoteLabel: "USDC",
+  baseLabel: "FTT",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
+const USDCUSDTMarketsInfo = {
+  address: new PublicKey("77quYg4MGneUdjgXCunt9GgM1usmrxKY31twEy3WHwcS"),
+  deprecated: false,
+  name : "USDC/USDT",
+  quoteLabel: "USDT",
+  baseLabel: "USDC",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
+const ORCAUSDCMarketsInfo = {
+  address: new PublicKey("8N1KkhaCYDpj3awD58d85n973EwkpeYnRp84y1kdZpMX"),
+  deprecated: false,
+  name : "ORCA/USDC",
+  quoteLabel: "USDC",
+  baseLabel: "ORCA",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
 
 export const USE_MARKETS: MarketInfo[] = _IGNORE_DEPRECATED
-  ? MARKETS.map((m) => ({ ...m, deprecated: false }))
-  : MARKETS;
+    ? Array<{
+      address: PublicKey;
+      name: string;
+      programId: PublicKey;
+      deprecated: boolean;
+    }>(0)
+        .concat( NEKIUSDCMarketsInfo )
+        .concat(solUSDCMarketsInfo)
+        .concat(srmUSDCMarketsInfo)
+        .concat(rayUSDCMarketsInfo)
+        .concat(CATOUSDCMarketsInfo)
+        .concat( FTTUSDCMarketsInfo )
+        .concat( USDCUSDTMarketsInfo )
+        .concat(ORCAUSDCMarketsInfo)
+    : MARKETS;
 
 export function useMarketsList() {
   return USE_MARKETS.filter(({ name, deprecated }) => !deprecated && !process.env.REACT_APP_EXCLUDE_MARKETS?.includes(name));
