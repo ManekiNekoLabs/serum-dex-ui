@@ -35,7 +35,7 @@ export interface ChartContainerState {}
 export const TVChartContainer = () => {
   // let datafeed = useTvDataFeed();
   const defaultProps: ChartContainerProps = {
-    symbol: 'BTC/USDC',
+    symbol: 'NEKI/USDC',
     // @ts-ignore
     interval: '60',
     auto_save_delay: 5,
@@ -44,12 +44,12 @@ export const TVChartContainer = () => {
     // datafeed: datafeed,
     libraryPath: '/charting_library/',
     chartsStorageApiVersion: '1.1',
-    clientId: 'tradingview.com',
+    clientId: 'dex.nekiswap.com',
     userId: 'public_user_id',
     fullscreen: false,
     autosize: true,
     datafeedUrl: BONFIDA_DATA_FEED,
-    studiesOverrides: {},
+    studiesOverrides: {}
   };
 
   const tvWidgetRef = React.useRef<IChartingLibraryWidget | null>(null);
@@ -68,7 +68,7 @@ export const TVChartContainer = () => {
       symbol:
         USE_MARKETS.find(
           (m) => m.address.toBase58() === market?.publicKey.toBase58(),
-        )?.name || 'SRM/USDC',
+        )?.name || 'NEKI/USDC',
       // BEWARE: no trailing slash is expected in feed URL
       // tslint:disable-next-line:no-any
       // @ts-ignore
