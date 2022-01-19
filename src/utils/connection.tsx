@@ -6,8 +6,10 @@ import tuple from 'immutable-tuple';
 import { ConnectionContextValues, EndpointInfo } from './types';
 
 export const ENDPOINTS: EndpointInfo[] = [
+    // endpoint: 'https://solana-api.projectserum.com'
+    // endpoint: 'https://solana-api.tt-prod.net',
   {
-    name: 'mainnet-beta',
+    name: 'mainnet',
     endpoint: 'https://solana-api.projectserum.com',
     custom: false,
   },

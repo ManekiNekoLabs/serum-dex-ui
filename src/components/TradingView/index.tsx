@@ -5,10 +5,14 @@ import {
   ChartingLibraryWidgetOptions,
   IChartingLibraryWidget,
 } from '../../charting_library';
+import Datafeed from './datafeed';
 import { useMarket, USE_MARKETS } from '../../utils/markets';
 import * as saveLoadAdapter from './saveLoadAdapter';
 import { flatten } from '../../utils/utils';
 import { BONFIDA_DATA_FEED } from '../../utils/bonfidaConnector';
+import {useState} from "react";
+import {ENV, TokenListProvider} from "@solana/spl-token-registry";
+import {sessionCache} from "../../utils";
 
 export interface ChartContainerProps {
   symbol: ChartingLibraryWidgetOptions['symbol'];
@@ -35,7 +39,7 @@ export interface ChartContainerState {}
 export const TVChartContainer = () => {
   // let datafeed = useTvDataFeed();
   const defaultProps: ChartContainerProps = {
-    symbol: 'NEKI/USDC',
+    symbol: 'BTC/USDC',
     // @ts-ignore
     interval: '60',
     auto_save_delay: 5,
@@ -54,34 +58,60 @@ export const TVChartContainer = () => {
 
   const tvWidgetRef = React.useRef<IChartingLibraryWidget | null>(null);
   const { market } = useMarket();
+  const [tokenMap, setTokenMap] = useState({});
 
   const chartProperties = JSON.parse(
-    localStorage.getItem('chartproperties') || '{}',
+      localStorage.getItem('chartproperties') || '{}',
   );
 
   React.useEffect(() => {
+    // grab the token list convert it to tokenMap and save to sessionCache
+    new TokenListProvider().resolve().then((tokens) => {
+      const tokenList = tokens.filterByChainId(ENV.MainnetBeta).getList();
+      const tokenMap = tokenList.reduce((map, item) => {
+        if (
+            !item.tags?.includes("lp-token") &&
+            !item.tags?.includes("saber-stableswap-lp")
+        ) {
+          // @ts-ignore
+          map[item.address] = item;
+        }
+        return map;
+      }, {})
+
+      setTokenMap(tokenMap);
+      sessionCache.setItem("tokenMap", tokenMap);
+      setTokenMap(tokenMap);
+    });
+
     const savedProperties = flatten(chartProperties, {
       restrictTo: ['scalesProperties', 'paneProperties', 'tradingProperties'],
     });
 
+    let baseLabel = USE_MARKETS.find((m) => m.address.toBase58() === market?.publicKey.toBase58(),)?.baseLabel;
+    // console.log('baseLabel', baseLabel);
+    let mintAddress = '';
+
+    if (baseLabel !== undefined) {
+      Object.entries(tokenMap).map(([key, value]) => {
+        // @ts-ignore
+        if (baseLabel === value.symbol) {
+          // @ts-ignore
+          mintAddress = value.address;
+        }
+      })
+    }
+
     const widgetOptions: ChartingLibraryWidgetOptions = {
-      symbol:
-        USE_MARKETS.find(
-          (m) => m.address.toBase58() === market?.publicKey.toBase58(),
-        )?.name || 'NEKI/USDC',
+      symbol: mintAddress || 'ALKiRVrfLgzeAV2mCT7cJHKg3ZoPvsCRSV7VCRWnE8zQ',
       // BEWARE: no trailing slash is expected in feed URL
       // tslint:disable-next-line:no-any
-      // @ts-ignore
-      // datafeed: datafeed,
-      // @ts-ignore
-      datafeed: new (window as any).Datafeeds.UDFCompatibleDatafeed(
-        defaultProps.datafeedUrl,
-      ),
+
+      datafeed: Datafeed,
       interval: defaultProps.interval as ChartingLibraryWidgetOptions['interval'],
       container_id: defaultProps.containerId as ChartingLibraryWidgetOptions['container_id'],
       library_path: defaultProps.libraryPath as string,
       auto_save_delay: 5,
-
       locale: 'en',
       disabled_features: ['use_localstorage_for_settings'],
       enabled_features: ['study_templates'],
@@ -114,16 +144,16 @@ export const TVChartContainer = () => {
           }),
           // "proterty"
           'trading.chart.proterty':
-            localStorage.getItem('trading.chart.proterty') ||
-            JSON.stringify({
-              hideFloatingPanel: 1,
-            }),
+              localStorage.getItem('trading.chart.proterty') ||
+              JSON.stringify({
+                hideFloatingPanel: 1,
+              }),
           'chart.favoriteDrawings':
-            localStorage.getItem('chart.favoriteDrawings') ||
-            JSON.stringify([]),
+              localStorage.getItem('chart.favoriteDrawings') ||
+              JSON.stringify([]),
           'chart.favoriteDrawingsPosition':
-            localStorage.getItem('chart.favoriteDrawingsPosition') ||
-            JSON.stringify({}),
+              localStorage.getItem('chart.favoriteDrawingsPosition') ||
+              JSON.stringify({}),
         },
         setValue: (key, value) => {
           localStorage.setItem(key, value);
@@ -139,8 +169,8 @@ export const TVChartContainer = () => {
     tvWidget.onChartReady(() => {
       tvWidgetRef.current = tvWidget;
       tvWidget
-        // @ts-ignore
-        .subscribe('onAutoSaveNeeded', () => tvWidget.saveChartToServer());
+          // @ts-ignore
+          .subscribe('onAutoSaveNeeded', () => tvWidget.saveChartToServer());
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [market, tvWidgetRef.current]);

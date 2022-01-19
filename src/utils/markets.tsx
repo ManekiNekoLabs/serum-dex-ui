@@ -19,6 +19,7 @@ import {
   OrderWithMarketAndMarketName,
   SelectedTokenAccounts,
   TokenAccount,
+
 } from './types';
 import {WRAPPED_SOL_MINT} from '@project-serum/serum/lib/token-instructions';
 import {Order} from '@project-serum/serum/lib/market';
@@ -34,7 +35,7 @@ const NEKIUSDCMarketsInfo = {
   baseLabel: "NEKI",
   programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
 };
-const solUSDCMarketsInfo = {
+const SOLUSDCMarketsInfo = {
   address: new PublicKey("9wFFyRfZBsuAha4YcuxcXLKwMxJR43S7fPfQLusDBzvT"),
   deprecated: false,
   name : "SOL/USDC",
@@ -42,7 +43,7 @@ const solUSDCMarketsInfo = {
   baseLabel: "SOL",
   programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
 };
-const srmUSDCMarketsInfo = {
+const SRMUSDCMarketsInfo = {
   address: new PublicKey("ByRys5tuUWDgL73G8JBAEfkdFf8JWBzPBDHsBVQ5vbQA"),
   deprecated: false,
   name : "SRM/USDC",
@@ -50,28 +51,12 @@ const srmUSDCMarketsInfo = {
   baseLabel: "SRM",
   programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
 };
-const rayUSDCMarketsInfo = {
+const RAYUSDCMarketsInfo = {
   address: new PublicKey("2xiv8A5xrJ7RnGdxXB42uFEkYHJjszEhaJyKKt4WaLep"),
   deprecated: false,
   name : "RAY/USDC",
   quoteLabel: "USDC",
   baseLabel: "RAY",
-  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
-};
-const CATOUSDCMarketsInfo = {
-  address: new PublicKey("9fe1MWiKqUdwift3dEpxuRHWftG72rysCRHbxDy6i9xB"),
-  deprecated: false,
-  name : "CATO/USDC",
-  quoteLabel: "USDC",
-  baseLabel: "CATO",
-  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
-};
-const FTTUSDCMarketsInfo = {
-  address: new PublicKey("2Pbh1CvRVku1TgewMfycemghf6sU9EyuFDcNXqvRmSxc"),
-  deprecated: false,
-  name : "FTT/USDC",
-  quoteLabel: "USDC",
-  baseLabel: "FTT",
   programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
 };
 const USDCUSDTMarketsInfo = {
@@ -90,6 +75,86 @@ const ORCAUSDCMarketsInfo = {
   baseLabel: "ORCA",
   programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
 };
+const DEGNUSDCMarketsInfo = {
+  address: new PublicKey("4j2JjUFFwzsq9fXpTqh7PGpqniMzQtKApXfz8pEv1AeK"),
+  deprecated: false,
+  name : "DEGN/USDC",
+  quoteLabel: "USDC",
+  baseLabel: "DEGN",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
+const KITTYUSDCMarketsInfo = {
+  address: new PublicKey("8bjQ8XvzrDxKxHhTccpLkqGLbBrCAAPuv6KHrgN95nDW"),
+  deprecated: false,
+  name : "KITTY/USDC",
+  quoteLabel: "USDC",
+  baseLabel: "KITTY",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
+const BTCUSDCMarketsInfo = {
+  address: new PublicKey("A8YFbxQYFVqKZaoYJLLUVcQiWP7G2MeEgW5wsAQgMvFw"),
+  deprecated: false,
+  name : "BTC/USDC",
+  quoteLabel: "USDC",
+  baseLabel: "BTC",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
+const ETHUSDCMarketsInfo = {
+  address: new PublicKey("4tSvZvnbyzHXLMTiFonMyxZoHmFqau1XArcRCVHLZ5gX"),
+  deprecated: false,
+  name : "ETH/USDC",
+  quoteLabel: "USDC",
+  baseLabel: "ETH",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
+const DSOLUSDCMarketsInfo = {
+  address: new PublicKey("5TL64aPK46am9PtwcRcNsXjNF9d2pUHPU8N44qh8BDJh"),
+  deprecated: false,
+  name : "DSOL/USDC",
+  quoteLabel: "USDC",
+  baseLabel: "DSOL",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
+const SOLAPEUSDCMarketsInfo = {
+  address: new PublicKey("4zffJaPyeXZ2wr4whHgP39QyTfurqZ2BEd4M5W6SEuon"),
+  deprecated: false,
+  name : "SOLAPE/USDC",
+  quoteLabel: "USDC",
+  baseLabel: "SOLAPE",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
+const FTTUSDCMarketsInfo = {
+  address: new PublicKey("2Pbh1CvRVku1TgewMfycemghf6sU9EyuFDcNXqvRmSxc"),
+  deprecated: false,
+  name : "FTT/USDC",
+  quoteLabel: "USDC",
+  baseLabel: "FTT",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
+const SOLNUTUSDCMarketsInfo = {
+  address: new PublicKey("CUttKiPJyu3dsfNwzaEHusGqY36qNkuWcZrVGrnPe9KQ"),
+  deprecated: false,
+  name : "SOLNUT/USDC",
+  quoteLabel: "USDC",
+  baseLabel: "SOLNUT",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
+const RINUSDCMarketsInfo = {
+  address: new PublicKey("7gZNLDbWE73ueAoHuAeFoSu7JqmorwCLpNTBXHtYSFTa"),
+  deprecated: false,
+  name : "RIN/USDC",
+  quoteLabel: "USDC",
+  baseLabel: "RIN",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
+const DGLNSDCMarketsInfo = {
+  address: new PublicKey("Cq1ddwyWSGrydBzAS7imQUiDQz66Lq9Qriz7CmpLda9s"),
+  deprecated: false,
+  name : "DGLN/USDC",
+  quoteLabel: "USDC",
+  baseLabel: "DGLN",
+  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
+};
 
 export const USE_MARKETS: MarketInfo[] = _IGNORE_DEPRECATED
     ? Array<{
@@ -98,14 +163,22 @@ export const USE_MARKETS: MarketInfo[] = _IGNORE_DEPRECATED
       programId: PublicKey;
       deprecated: boolean;
     }>(0)
-        .concat( NEKIUSDCMarketsInfo )
-        .concat(solUSDCMarketsInfo)
-        .concat(srmUSDCMarketsInfo)
-        .concat(rayUSDCMarketsInfo)
-        .concat(CATOUSDCMarketsInfo)
-        .concat( FTTUSDCMarketsInfo )
-        .concat( USDCUSDTMarketsInfo )
+        .concat(NEKIUSDCMarketsInfo)
+        .concat(SOLUSDCMarketsInfo)
+        .concat(SRMUSDCMarketsInfo)
+        .concat(RAYUSDCMarketsInfo)
+        .concat(USDCUSDTMarketsInfo)
         .concat(ORCAUSDCMarketsInfo)
+        .concat(DEGNUSDCMarketsInfo)
+        .concat(KITTYUSDCMarketsInfo)
+        .concat(BTCUSDCMarketsInfo)
+        .concat(ETHUSDCMarketsInfo)
+        .concat(DSOLUSDCMarketsInfo)
+        .concat(SOLAPEUSDCMarketsInfo)
+        .concat(FTTUSDCMarketsInfo)
+        .concat(SOLNUTUSDCMarketsInfo)
+        .concat(RINUSDCMarketsInfo)
+        .concat(DGLNSDCMarketsInfo)
     : MARKETS;
 
 export function useMarketsList() {
@@ -236,7 +309,7 @@ const _SLOW_REFRESH_INTERVAL = 5 * 1000;
 const _FAST_REFRESH_INTERVAL = 1000;
 
 export const DEFAULT_MARKET = USE_MARKETS.find(
-  ({ name, deprecated }) => name === 'SRM/USDT' && !deprecated,
+  ({ name, deprecated }) => name === 'NEKI/USDC' && !deprecated,
 );
 
 export function getMarketDetails(

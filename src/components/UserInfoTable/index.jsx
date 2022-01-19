@@ -16,7 +16,11 @@ export default function Index() {
     <FloatingElement style={{ flex: 1, paddingTop: 20 }}>
       <Typography>
         <Paragraph style={{ color: 'rgba(255,255,255,0.5)' }}>
-          Make sure to go to Balances and click Settle to send out your funds.
+          Make sure to go to Balances and click Settle or use{' '}
+          <a target="_blank" href="https://app.step.finance/#/dashboard">
+            Step Finance
+          </a>
+          to send out your funds.
         </Paragraph>
         <Paragraph style={{ color: 'rgba(255,255,255,0.5)' }}>
           To fund your wallet, <a href="https://www.sollet.io">sollet.io</a>.

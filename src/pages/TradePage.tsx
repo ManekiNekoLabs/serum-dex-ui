@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Button, Col, Popover, Row, Select, Typography } from 'antd';
+import {Button, Card, Col, Popover, Row, Select, Typography} from 'antd';
 import styled from 'styled-components';
 import Orderbook from '../components/Orderbook';
 import UserInfoTable from '../components/UserInfoTable';
@@ -84,7 +84,7 @@ function TradePageInner() {
   });
 
   useEffect(() => {
-    document.title = marketName ? `${marketName} — Serum` : 'Serum';
+    document.title = marketName ? `${marketName} — Maneki` : 'Maneki';
   }, [marketName]);
 
   const changeOrderRef = useRef<
@@ -338,12 +338,14 @@ const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
     <Row
       style={{
         minHeight: '900px',
-        flexWrap: 'nowrap',
+        flexWrap: 'nowrap'
       }}
     >
       <Col flex="auto" style={{ height: '50vh' }}>
         <Row style={{ height: '100%' }}>
-          <TVChartContainer />
+          <Card bordered={false} className="wrapper-floating-el" style={{ width: '100%', height: 'calc(100% - 8px)', marginTop: '5px', backgroundColor: '#1a2029', marginLeft: '5px', marginRight: '5px', display: 'grid' }}>
+            <TVChartContainer />
+          </Card>
         </Row>
         <Row style={{ height: '70%' }}>
           <UserInfoTable />
@@ -366,47 +368,66 @@ const RenderNormal = ({ onChangeOrderRef, onPrice, onSize }) => {
 
 const RenderSmall = ({ onChangeOrderRef, onPrice, onSize }) => {
   return (
-    <>
-      <Row style={{ height: '30vh' }}>
-        <TVChartContainer />
-      </Row>
-      <Row
-        style={{
-          height: '900px',
-        }}
-      >
-        <Col flex="auto" style={{ height: '100%', display: 'flex' }}>
-          <Orderbook
-            smallScreen={true}
-            depth={13}
-            onPrice={onPrice}
-            onSize={onSize}
-          />
-        </Col>
-        <Col flex="auto" style={{ height: '100%', display: 'flex' }}>
-          <TradesTable smallScreen={true} />
-        </Col>
-        <Col
-          flex="400px"
-          style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+      <>
+        <Row
+            style={{
+              height: '370px',
+            }}
         >
-          <TradeForm setChangeOrderRef={onChangeOrderRef} />
-          <StandaloneBalancesDisplay />
-        </Col>
-      </Row>
-      <Row>
-        <Col flex="auto">
-          <UserInfoTable />
-        </Col>
-      </Row>
-    </>
+          <Col flex="auto" style={{ height: '100%', display: 'flex' }}>
+            <Card bordered={false} className="wrapper-floating-el" style={{ width: '100%', height: 'calc(100% - 8px)', marginTop: '5px', backgroundColor: '#1a2029', marginLeft: '5px', marginRight: '5px', display: 'grid' }}>
+              <TVChartContainer />
+            </Card>
+          </Col>
+          <Col
+              flex="400px"
+              style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+          >
+            <TradeForm setChangeOrderRef={onChangeOrderRef}
+                       style={{ height: '100%'}} />
+          </Col>
+        </Row>
+        <Row
+            style={{
+              height: '900px',
+              marginTop: '8px'
+            }}
+            className="row-rounded"
+        >
+          <Col flex="370px" style={{ height: '100%', display: 'flex' }}>
+            <Orderbook
+                smallScreen={true}
+                depth={13}
+                onPrice={onPrice}
+                onSize={onSize}
+            />
+          </Col>
+          <Col
+              flex="370px"
+              style={{ height: '100%', display: 'flex', flexDirection: 'column', overflowY: 'scroll' }}
+          >
+            <TradesTable smallScreen={true} />
+          </Col>
+          <Col
+              flex="auto"
+              style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+          >
+            <StandaloneBalancesDisplay />
+          </Col>
+        </Row>
+        <Row>
+          <Col flex="auto">
+            <UserInfoTable />
+          </Col>
+        </Row>
+      </>
   );
 };
 
 const RenderSmaller = ({ onChangeOrderRef, onPrice, onSize }) => {
   return (
     <>
-      <Row style={{ height: '50vh' }}>
+      <Row style={{ height: '50vh', margin: '5px' }}>
         <TVChartContainer />
       </Row>
       <Row>
