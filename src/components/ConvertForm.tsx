@@ -95,7 +95,7 @@ export default function ConvertForm() {
 
   return (
     <FloatingElement style={{ maxWidth: 500 }}>
-      <Title level={3}>Convert</Title>
+      <Title level={3}>Swap</Title>
       {!connected && (
         <Row justify="center">
           <Col>
@@ -387,7 +387,7 @@ function ConvertFormSubmit({
             onClick={onConvert}
             disabled={!canConvert}
           >
-            Convert
+            Swap
           </ConvertButton>
         </Col>
       </Row>

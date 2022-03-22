@@ -1,8 +1,8 @@
 import { BonfidaTrade } from './types';
 
 export default class BonfidaApi {
+  // https://api.degendex.io/
   static URL: string = 'https://api.degendex.io/';
-
   static async get(path: string) {
     try {
       const response = await fetch(this.URL + path);

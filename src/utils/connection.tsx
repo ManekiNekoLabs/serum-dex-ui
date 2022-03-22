@@ -10,7 +10,7 @@ export const ENDPOINTS: EndpointInfo[] = [
     // endpoint: 'https://solana-api.tt-prod.net',
   {
     name: 'mainnet',
-    endpoint: 'https://solana-api.projectserum.com',
+    endpoint: 'https://solana-api.tt-prod.net',
     custom: false,
   },
   { name: 'localnet', endpoint: 'http://127.0.0.1:8899', custom: false },

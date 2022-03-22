@@ -17,13 +17,17 @@ export default function Index() {
       <Typography>
         <Paragraph style={{ color: 'rgba(255,255,255,0.5)' }}>
           Make sure to go to Balances and click Settle or use{' '}
-          <a target="_blank" href="https://app.step.finance/#/dashboard">
+          <a
+            rel="noopener noreferrer"
+            target="_blank"
+            href="https://app.step.finance/#/dashboard"
+          >
             Step Finance
-          </a>
+          </a>{' '}
           to send out your funds.
         </Paragraph>
         <Paragraph style={{ color: 'rgba(255,255,255,0.5)' }}>
-          To fund your wallet, <a href="https://www.sollet.io">sollet.io</a>.
+          To fund your wallet, <a href="https://phantom.app">phantom.app</a>.
           You can get SOL from FTX, Binance, BitMax, and others. You can get
           other tokens from FTX.{' '}
         </Paragraph>

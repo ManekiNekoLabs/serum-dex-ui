@@ -107,44 +107,12 @@ const ETHUSDCMarketsInfo = {
   baseLabel: "ETH",
   programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
 };
-const DSOLUSDCMarketsInfo = {
-  address: new PublicKey("5TL64aPK46am9PtwcRcNsXjNF9d2pUHPU8N44qh8BDJh"),
-  deprecated: false,
-  name : "DSOL/USDC",
-  quoteLabel: "USDC",
-  baseLabel: "DSOL",
-  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
-};
-const SOLAPEUSDCMarketsInfo = {
-  address: new PublicKey("4zffJaPyeXZ2wr4whHgP39QyTfurqZ2BEd4M5W6SEuon"),
-  deprecated: false,
-  name : "SOLAPE/USDC",
-  quoteLabel: "USDC",
-  baseLabel: "SOLAPE",
-  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
-};
 const FTTUSDCMarketsInfo = {
   address: new PublicKey("2Pbh1CvRVku1TgewMfycemghf6sU9EyuFDcNXqvRmSxc"),
   deprecated: false,
   name : "FTT/USDC",
   quoteLabel: "USDC",
   baseLabel: "FTT",
-  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
-};
-const SOLNUTUSDCMarketsInfo = {
-  address: new PublicKey("CUttKiPJyu3dsfNwzaEHusGqY36qNkuWcZrVGrnPe9KQ"),
-  deprecated: false,
-  name : "SOLNUT/USDC",
-  quoteLabel: "USDC",
-  baseLabel: "SOLNUT",
-  programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
-};
-const RINUSDCMarketsInfo = {
-  address: new PublicKey("7gZNLDbWE73ueAoHuAeFoSu7JqmorwCLpNTBXHtYSFTa"),
-  deprecated: false,
-  name : "RIN/USDC",
-  quoteLabel: "USDC",
-  baseLabel: "RIN",
   programId: new PublicKey("9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin")
 };
 const DGLNSDCMarketsInfo = {
@@ -173,11 +141,7 @@ export const USE_MARKETS: MarketInfo[] = _IGNORE_DEPRECATED
         .concat(KITTYUSDCMarketsInfo)
         .concat(BTCUSDCMarketsInfo)
         .concat(ETHUSDCMarketsInfo)
-        .concat(DSOLUSDCMarketsInfo)
-        .concat(SOLAPEUSDCMarketsInfo)
         .concat(FTTUSDCMarketsInfo)
-        .concat(SOLNUTUSDCMarketsInfo)
-        .concat(RINUSDCMarketsInfo)
         .concat(DGLNSDCMarketsInfo)
     : MARKETS;
 
@@ -427,6 +391,10 @@ export function getTradePageUrl(marketAddress?: string) {
     marketAddress = marketAddress || DEFAULT_MARKET?.address.toBase58() || '';
   }
   return `/market/${marketAddress}`;
+}
+
+export function getSwapPageUrl() {
+  return `/swap/`;
 }
 
 export function useSelectedTokenAccounts(): [

@@ -17,7 +17,7 @@ import { notify } from '../utils/notifications';
 import { Connection } from '@solana/web3.js';
 import WalletConnect from './WalletConnect';
 import AppSearch from './AppSearch';
-import { getTradePageUrl } from '../utils/markets';
+import {getSwapPageUrl, getTradePageUrl} from '../utils/markets';
 
 const Wrapper = styled.div`
   background-color: #0d1017;
@@ -66,17 +66,17 @@ export default function TopBar() {
   const [searchFocussed, setSearchFocussed] = useState(false);
 
   const handleClick = useCallback(
-    (e) => {
-      if (!(e.key in EXTERNAL_LINKS)) {
-        history.push(e.key);
-      }
-    },
-    [history],
+      (e) => {
+        if (!(e.key in EXTERNAL_LINKS)) {
+          history.push(e.key);
+        }
+      },
+      [history],
   );
 
   const onAddCustomEndpoint = (info: EndpointInfo) => {
     const existingEndpoint = availableEndpoints.some(
-      (e) => e.endpoint === info.endpoint,
+        (e) => e.endpoint === info.endpoint,
     );
     if (existingEndpoint) {
       notify({
@@ -97,18 +97,18 @@ export default function TopBar() {
     try {
       const connection = new Connection(info.endpoint, 'recent');
       connection
-        .getBlockTime(0)
-        .then(() => {
-          setTestingConnection(true);
-          console.log(`testing connection to ${info.endpoint}`);
-          const newCustomEndpoints = [
-            ...availableEndpoints.filter((e) => e.custom),
-            info,
-          ];
-          setEndpoint(info.endpoint);
-          setCustomEndpoints(newCustomEndpoints);
-        })
-        .catch(handleError);
+          .getBlockTime(0)
+          .then(() => {
+            setTestingConnection(true);
+            console.log(`testing connection to ${info.endpoint}`);
+            const newCustomEndpoints = [
+              ...availableEndpoints.filter((e) => e.custom),
+              info,
+            ];
+            setEndpoint(info.endpoint);
+            setCustomEndpoints(newCustomEndpoints);
+          })
+          .catch(handleError);
     } catch (e) {
       handleError(e);
     } finally {
@@ -128,139 +128,135 @@ export default function TopBar() {
   }, [endpointInfoCustom, setEndpoint]);
 
   const tradePageUrl = location.pathname.startsWith('/market/')
-    ? location.pathname
-    : getTradePageUrl();
+      ? location.pathname
+      : getTradePageUrl();
+
+  const swapPageUrl = location.pathname.startsWith('/swap/')
+      ? location.pathname
+      : getSwapPageUrl();
 
   return (
-    <>
-      <CustomClusterEndpointDialog
-        visible={addEndpointVisible}
-        testingConnection={testingConnection}
-        onAddCustomEndpoint={onAddCustomEndpoint}
-        onClose={() => setAddEndpointVisible(false)}
-      />
-      <Wrapper>
-        <LogoWrapper onClick={() => history.push(tradePageUrl)}>
-          <img src={logo} alt="" />
-          {'NEKI DEX'}
-        </LogoWrapper>
-        <Menu
-          mode="horizontal"
-          onClick={handleClick}
-          selectedKeys={[location.pathname]}
-          style={{
-            borderBottom: 'none',
-            backgroundColor: 'transparent',
-            display: 'flex',
-            alignItems: 'flex-end',
-            flex: 1,
-          }}
-        >
-          <Menu.Item key={tradePageUrl} style={{ margin: '0 0px 0 10px' }}>
-            TRADE
-          </Menu.Item>
-          {/*{!searchFocussed && (*/}
-          {/*  <Menu.Item key="/swap" style={{ margin: '0 0px' }}>*/}
-          {/*    <a*/}
-          {/*      href={EXTERNAL_LINKS['/swap']}*/}
-          {/*      target="_blank"*/}
-          {/*      rel="noopener noreferrer"*/}
-          {/*    >*/}
-          {/*      SWAP*/}
-          {/*    </a>*/}
-          {/*  </Menu.Item>*/}
-          {/*)}*/}
-          {/*{connected && (!searchFocussed || location.pathname === '/balances') && (*/}
-          {/*  <Menu.Item key="/balances" style={{ margin: '0 0px' }}>*/}
-          {/*    BALANCES*/}
-          {/*  </Menu.Item>*/}
-          {/*)}*/}
-          {connected && (!searchFocussed || location.pathname === '/orders') && (
-            <Menu.Item key="/orders" style={{ margin: '0 0px' }}>
-              ORDERS
-            </Menu.Item>
-          )}
-          {connected && (!searchFocussed || location.pathname === '/convert') && (
-            <Menu.Item key="/convert" style={{ margin: '0 0px' }}>
-              CONVERT
-            </Menu.Item>
-          )}
-          {(!searchFocussed || location.pathname === '/list-new-market') && (
-            <Menu.Item key="/list-new-market" style={{ margin: '0 0px' }}>
-              ADD MARKET
-            </Menu.Item>
-          )}
-        </Menu>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            paddingRight: 5,
-          }}
-        >
-          <AppSearch
-            onFocus={() => setSearchFocussed(true)}
-            onBlur={() => setSearchFocussed(false)}
-            focussed={searchFocussed}
-            width={searchFocussed ? '350px' : '35px'}
-          />
-        </div>
-        <div>
-          <Row
-            align="middle"
-            style={{ paddingLeft: 5, paddingRight: 5 }}
-            gutter={16}
+      <>
+        <CustomClusterEndpointDialog
+            visible={addEndpointVisible}
+            testingConnection={testingConnection}
+            onAddCustomEndpoint={onAddCustomEndpoint}
+            onClose={() => setAddEndpointVisible(false)}
+        />
+        <Wrapper>
+          <LogoWrapper onClick={() => history.push(tradePageUrl)}>
+            <img src={logo} alt="" />
+            {'NEKI DEX'}
+          </LogoWrapper>
+          <Menu
+              mode="horizontal"
+              onClick={handleClick}
+              selectedKeys={[location.pathname]}
+              style={{
+                borderBottom: 'none',
+                backgroundColor: 'transparent',
+                display: 'flex',
+                alignItems: 'flex-end',
+                flex: 1,
+              }}
           >
-            <Col>
-              <PlusCircleOutlined
-                style={{ color: '#2abdd2' }}
-                onClick={() => setAddEndpointVisible(true)}
-              />
-            </Col>
-            <Col>
-              <Popover
-                content={endpoint}
-                placement="bottomRight"
-                title="URL"
-                trigger="hover"
-              >
-                <InfoCircleOutlined style={{ color: '#2abdd2' }} />
-              </Popover>
-            </Col>
-            <Col>
-              <Select
-                onSelect={setEndpoint}
-                value={endpoint}
-                style={{ marginRight: 8, width: '150px' }}
-              >
-                {availableEndpoints.map(({ name, endpoint }) => (
-                  <Select.Option value={endpoint} key={endpoint}>
-                    {name}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Col>
-          </Row>
-        </div>
-        {connected && (
-          <div>
-            <Popover
-              content={<Settings autoApprove={wallet?.autoApprove} />}
-              placement="bottomRight"
-              title="Settings"
-              trigger="click"
-            >
-              <Button style={{ marginRight: 8 }}>
-                <SettingOutlined />
-                Settings
-              </Button>
-            </Popover>
+            <Menu.Item key={tradePageUrl} style={{ margin: '0 0px 0 10px' }}>
+              DEX
+            </Menu.Item>
+            {/*{connected && (!searchFocussed || location.pathname === '/balances') && (*/}
+            {/*  <Menu.Item key="/balances" style={{ margin: '0 0px' }}>*/}
+            {/*    BALANCES*/}
+            {/*  </Menu.Item>*/}
+            {/*)}*/}
+            <Menu.Item key={swapPageUrl} style={{ margin: '0 0px' }}>
+              SWAP
+            </Menu.Item>
+            {connected && (!searchFocussed || location.pathname === '/orders') && (
+                <Menu.Item key="/orders" style={{ margin: '0 0px' }}>
+                  ORDERS
+                </Menu.Item>
+            )}
+            {/*{connected && (!searchFocussed || location.pathname === '/convert') && (*/}
+            {/*    <Menu.Item key="/convert" style={{ margin: '0 0px' }}>*/}
+            {/*      CONVERT*/}
+            {/*    </Menu.Item>*/}
+            {/*)}*/}
+            {(!searchFocussed || location.pathname === '/list-new-market') && (
+                <Menu.Item key="/list-new-market" style={{ margin: '0 0px' }}>
+                  ADD MARKET
+                </Menu.Item>
+            )}
+          </Menu>
+          <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                paddingRight: 5,
+              }}
+          >
+            <AppSearch
+                onFocus={() => setSearchFocussed(true)}
+                onBlur={() => setSearchFocussed(false)}
+                focussed={searchFocussed}
+                width={searchFocussed ? '350px' : '35px'}
+            />
           </div>
-        )}
-        <div>
-          <WalletConnect />
-        </div>
-      </Wrapper>
-    </>
+          <div>
+            <Row
+                align="middle"
+                style={{ paddingLeft: 5, paddingRight: 5 }}
+                gutter={16}
+            >
+              <Col>
+                <PlusCircleOutlined
+                    style={{ color: '#2abdd2' }}
+                    onClick={() => setAddEndpointVisible(true)}
+                />
+              </Col>
+              <Col>
+                <Popover
+                    content={endpoint}
+                    placement="bottomRight"
+                    title="URL"
+                    trigger="hover"
+                >
+                  <InfoCircleOutlined style={{ color: '#2abdd2' }} />
+                </Popover>
+              </Col>
+              <Col>
+                <Select
+                    onSelect={setEndpoint}
+                    value={endpoint}
+                    style={{ marginRight: 8, width: '150px' }}
+                >
+                  {availableEndpoints.map(({ name, endpoint }) => (
+                      <Select.Option value={endpoint} key={endpoint}>
+                        {name}
+                      </Select.Option>
+                  ))}
+                </Select>
+              </Col>
+            </Row>
+          </div>
+          {connected && (
+              <div>
+                <Popover
+                    content={<Settings autoApprove={wallet?.autoApprove} />}
+                    placement="bottomRight"
+                    title="Settings"
+                    trigger="click"
+                >
+                  <Button style={{ marginRight: 8 }}>
+                    <SettingOutlined />
+                    Settings
+                  </Button>
+                </Popover>
+              </div>
+          )}
+          <div>
+            <WalletConnect />
+          </div>
+        </Wrapper>
+      </>
   );
 }
